@@ -1,0 +1,16 @@
+#!/bin/bash
+for dist in 0.251 0.252 0.253 0.254 0.255 0.260 0.265 0.268 0.270 0.272 0.275;
+do
+    cd dist_$dist
+    
+    # The line which contains the energy is extracted from each single point calculation
+    grep "TOTAL ENERGY(DFT)" run.out >> ../out_E.txt
+    cd ..
+
+    # Only the result of the energy is stored (4 column of data) in a new file called E.dat
+    awk '{print $4}' out_E.txt > E.dat
+    # The distances are store in other file, d.dat
+    echo $dist >> d.dat
+
+done
+    rm -f out_E.txt
